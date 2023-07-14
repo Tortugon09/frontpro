@@ -25,10 +25,10 @@ export default function Login() {
 
     const loginDates= async(user) => {
         const { email, lastName, name, password,phone } = user;
-        await axios.post('http://127.0.0.1:8000/api/login', { email ,lastName , name, password , phone })
+        await axios.post('http://127.0.0.1:8000/api/register', { email ,lastName , name, password , phone })
             .then( function (response) {
                 console.log(response.data);
-                navigate("/home")
+                navigate("/")
             })
             .catch(function (error) {
                 console.log(error);
@@ -70,6 +70,25 @@ export default function Login() {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form className="space-y-6" onSubmit={handlesubmit} method="POST">
+                        <div>
+                            <div className="flex ">
+                                <label htmlFor="Name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    Name
+                                </label>
+                            </div>
+                            <div className="mt-2">
+                                <input
+                                    onChange={handleChange}
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    autoComplete="name"
+                                    required
+                                    className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                        </div>
+
                         <div>
                             <div className="flex ">
                                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
