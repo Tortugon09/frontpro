@@ -25,7 +25,7 @@ export default function Login() {
 
     const loginDates= async(user) => {
         const { email, lastName, name, password,phone } = user;
-        await axios.post('http://127.0.0.1:8000/api/register', { email ,lastName , name, password , phone })
+        await axios.post('http://54.242.22.218/api/register', { email ,lastName , name, password , phone })
             .then( function (response) {
                 console.log(response.data);
                 navigate("/")
@@ -38,7 +38,7 @@ export default function Login() {
 
     const handlesubmit = (e) => {
         e.preventDefault()
-        login(user);
+        loginDates(user)
         if (token === "")  {
             console.log("error")
         } else {

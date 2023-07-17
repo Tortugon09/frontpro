@@ -1,12 +1,77 @@
 import {createContext, useState, useEffect, useReducer} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-
+// Importar TensorFlow.js
+import * as tf from '@tensorflow/tfjs';
 
 export const Context = createContext();
 
 
 export const ContexProvider = ({ children }) => {
+
+// Definir los datos de entrenamiento
+    const datosEntrenamiento = [
+        { pH: 6.7, fecha: new Date('2023-07-01') },
+        { pH: 7.2, fecha: new Date('2023-07-02') },
+        { pH: 5.5, fecha: new Date('2023-07-03') },
+        // Agrega más datos de entrenamiento aquí
+    ];
+
+// Obtener los valores máximos y mínimos de pH
+    const minPh = 1;
+    const maxPh = 14;
+
+// Convertir los datos de entrenamiento en tensores
+    const tensorDatosEntrenamiento = tf.tensor2d(
+        datosEntrenamiento.map(d => [d.fecha.getTime(), d.pH]),
+        [datosEntrenamiento.length, 2]
+    );
+
+// Normalizar los valores de pH entre 0 y 1
+    const tensorDatosNormalizados = tensorDatosEntrenamiento
+        .sub([0, minPh])
+        .div([1, maxPh - minPh]);
+
+// Separar los tensores normalizados en características (fechas) y etiquetas (valores de pH)
+    const tensorFechas = tensorDatosNormalizados.slice([0, 0], [-1, 1]);
+    const tensorPh = tensorDatosNormalizados.slice([0, 1], [-1, 1]);
+
+// Crear el modelo
+    const modelo = tf.sequential();
+    modelo.add(tf.layers.dense({ units: 8, inputShape: [1], activation: 'relu' }));
+    modelo.add(tf.layers.dense({ units: 1 }));
+
+// Compilar el modelo
+    modelo.compile({ loss: 'meanSquaredError', optimizer: 'adam' });
+
+// Entrenar el modelo
+    modelo.fit(tensorFechas, tensorPh, { epochs: 100 })
+        .then(() => {
+            // Hacer predicciones
+            const datosPrediccion = [
+                { pH: 6.9, fecha: new Date('2023-07-04') },
+                { pH: 7.8, fecha: new Date('2023-07-05') },
+                { pH: 5.1, fecha: new Date('2023-07-06') }
+            ];
+
+            const tensorDatosPrediccion = tf.tensor2d(
+                datosPrediccion.map(d => [d.fecha.getTime()]),
+                [datosPrediccion.length, 1]
+            );
+
+            const tensorDatosPrediccionNormalizados = tensorDatosPrediccion
+                .sub([0])
+                .div([1]);
+
+            const prediccionesNormalizadas = modelo.predict(tensorDatosPrediccionNormalizados);
+
+            const predicciones = Array.from(prediccionesNormalizadas.dataSync());
+
+            console.log(predicciones);
+        })
+        .catch(err => console.error(err));
+
+
 
 
     const navigate = useNavigate();
@@ -29,6 +94,7 @@ export const ContexProvider = ({ children }) => {
 
     //STATES FOR THE PRODUCTS
     const [products, setProducts] = useState([]);
+    const [valores, setValores] = useState([]);
     //STATES FOR THE USERS
 
     //STATE FOR ALL USERS
@@ -115,6 +181,25 @@ export const ContexProvider = ({ children }) => {
         navigate("/HappyWeb/LogIn")
     }
 
+    useEffect(() => {
+        getPH();
+    }, []);
+
+
+    const getPH= async() => {
+        await axios.get("http://3.16.51.196/watersample/get_sample_day/2023-07-15").then(
+            function (response){
+                console.log(response.data.data)
+                setValores(response.data.data)
+            }
+        )
+            .catch(function (error) {
+                console.log(error)
+            });
+    }
+
+
+
 
 
 
@@ -123,6 +208,8 @@ export const ContexProvider = ({ children }) => {
         <Context.Provider
             value={{
                 createUserPost,
+                valores,
+                setValores,
                 setUserR,
                 login,
                 setLoginUser,

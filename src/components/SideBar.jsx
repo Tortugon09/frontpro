@@ -1,20 +1,24 @@
-import { Fragment, useState } from 'react'
+import {Fragment, useContext, useState} from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {Bars3BottomLeftIcon, HomeIcon, XMarkIcon, BeakerIcon, BoltIcon, FireIcon} from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import {Link} from "react-router-dom";
 import logo from "../assets/logo.jpg"
 import jak from "../assets/logojak.png"
-import {Chart} from "./Chart.jsx";
 import {LineChart} from "./Line.jsx";
+import {LineChart2} from "./Line2";
+import {LineChart3} from "./Line3";
+import axios from "axios";
+import {Context} from "../context/context.jsx";
 
 const navigation = [
-    { name: 'Home', href: '#', icon: HomeIcon, current: true },
-    { name: 'PH', href: '#', icon: BeakerIcon, current: true },
-    { name: 'Conductividad Electrica', href: '#', icon: BoltIcon, current: true },
-    { name: 'Termopar', href: '#', icon: FireIcon, current: true },
+    { name: 'Home', href: '/Home', icon: HomeIcon, current: true },
+    { name: 'PH', href: '/PH', icon: BeakerIcon, current: true },
+    { name: 'Conductividad Electrica', href: '/CE', icon: BoltIcon, current: true },
+    { name: 'Termopar', href: '/Temp', icon: FireIcon, current: true },
 
 ]
+
 const userNavigation = [
     { name: 'Sign out', href: '/' },
 ]
@@ -24,7 +28,10 @@ function classNames(...classes) {
 }
 
 export default function SideBar() {
+    const {login,token, setToken, setUserR,userR,setOpen, valores} = useContext(Context);
+
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [ph, setPh] = useState(true)
 
     return (
         <>
@@ -84,9 +91,9 @@ export default function SideBar() {
                                     <div className="mt-5 h-0 flex-1 overflow-y-auto">
                                         <nav className="space-y-1 px-2">
                                             {navigation.map((item) => (
-                                                <a
+                                                <Link
                                                     key={item.name}
-                                                    href={item.href}
+                                                    to={item.href}
                                                     className={classNames(
                                                         item.current ? 'bg-transparent text-gris-text' : 'text-indigo-100 hover:bg-indigo-600',
                                                         'group flex items-center px-2 py-2 text-base font-medium rounded-md'
@@ -94,7 +101,7 @@ export default function SideBar() {
                                                 >
                                                     <item.icon className="mr-4 h-6 w-6 flex-shrink-0 text-gris-text" aria-hidden="true" />
                                                     {item.name}
-                                                </a>
+                                                </Link>
                                             ))}
                                         </nav>
                                     </div>
@@ -226,12 +233,13 @@ export default function SideBar() {
                                 <h1 className="text-2xl font-semibold text-gray-900">Model Test</h1>
                             </div>
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                                {/* Replace with your content */}
                                 <div className="py-4">
-                                    <Chart/>
+
+                                    <button>prueba</button>
                                     <LineChart/>
+                                    <LineChart2/>
+                                    <LineChart3/>
                                 </div>
-                                {/* /End replace */}
                             </div>
                         </div>
                     </main>

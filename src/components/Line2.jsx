@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import {Context} from "../context/context.jsx";
-import {math} from "@tensorflow/tfjs";
 // import faker from 'faker';
 
 ChartJS.register(
@@ -37,10 +36,21 @@ export const options = {
     },
 };
 
-export function LineChart() {
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+
+
+
+
+export function LineChart2() {
     const {valores} = useContext(Context);
-    const valoresPH = valores.map((valor) => valor.ph)
-    const valoresPHPred = valores.map((valor) => valor.ph + Math.random())
+
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const valoresCondu = valores.map((valor) => valor.condu)
+    const valoresConduPred = valores.map((valor) => valor.condu + getRandomArbitrary(1, 30))
     const labels = valores.map((valor) => {
         const fecha = new Date(valor.timestamp)
         const dia = fecha.getDate();
@@ -54,13 +64,13 @@ export function LineChart() {
         labels,
         datasets: [
             {
-                label: 'PH',
-                data: valoresPH, // Datos estáticos o personalizados
+                label: 'Conductividad Electrica',
+                data: valoresCondu, // Datos estáticos o personalizados
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
-                label: 'PH Predicho',
-                data: valoresPHPred, // Datos estáticos o personalizados
+                label: 'Conductividad Predicho',
+                data: valoresConduPred, // Datos estáticos o personalizados
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
         ],

@@ -7,7 +7,7 @@ import axios from "axios";
 
 export default function Login() {
 
-    const {login,token, setUserR,userR,setOpen} = useContext(Context);
+    const {login,token, setToken, setUserR,userR,setOpen} = useContext(Context);
     const [user, setuser] = useState({
         email: "",
         lastName: "",
@@ -25,9 +25,10 @@ export default function Login() {
 
     const loginDates= async(user) => {
         const { email, lastName, name, password,phone } = user;
-        await axios.post('http://127.0.0.1:8000/api/login', { email ,lastName , name, password , phone })
+        await axios.post('http://3.16.51.196/api/login', { email ,lastName , name, password , phone })
             .then( function (response) {
-                console.log(response.data);
+                console.log(response.data.jwt);
+                setToken(response.data.jwt)
                 navigate("/home")
             })
             .catch(function (error) {
@@ -38,7 +39,7 @@ export default function Login() {
 
     const handlesubmit = (e) => {
         e.preventDefault()
-        login(user);
+        loginDates(user)
         if (token === "")  {
             console.log("error")
         } else {

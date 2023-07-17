@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import {Context} from "../context/context.jsx";
-import {math} from "@tensorflow/tfjs";
 // import faker from 'faker';
 
 ChartJS.register(
@@ -37,14 +36,19 @@ export const options = {
     },
 };
 
-export function LineChart() {
+export function LineChart3() {
     const {valores} = useContext(Context);
-    const valoresPH = valores.map((valor) => valor.ph)
-    const valoresPHPred = valores.map((valor) => valor.ph + Math.random())
+
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const valoresTemp = valores.map((valor) => valor.termo)
+    const valoresTempPred = valores.map((valor) => valor.termo + getRandomArbitrary(1, 30))
     const labels = valores.map((valor) => {
         const fecha = new Date(valor.timestamp)
         const dia = fecha.getDate();
-        const mes = fecha.getMonth() + 1; // Los meses en JavaScript son base 0, por lo que se suma 1
+        const mes = fecha.getMonth() + 1;
         const ano = fecha.getFullYear();
         const representacionFecha = `${dia}/${mes}/${ano}`;
         return (representacionFecha)
@@ -54,13 +58,13 @@ export function LineChart() {
         labels,
         datasets: [
             {
-                label: 'PH',
-                data: valoresPH, // Datos estáticos o personalizados
+                label: 'Temperatura',
+                data: valoresTemp, // Datos estáticos o personalizados
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
-                label: 'PH Predicho',
-                data: valoresPHPred, // Datos estáticos o personalizados
+                label: 'Temperatura Actual',
+                data: valoresTempPred, // Datos estáticos o personalizados
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
         ],
