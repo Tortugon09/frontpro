@@ -11,23 +11,21 @@ function App() {
 
 
   return (
-    <>
-
-            <BrowserRouter>
-                <ContexProvider>
-                    <Routes>
-                        <Route path="/" element={<Login />} />
-                        <Route path="/Register" element={<Register />} />
-                        <Route path="/home" element={
-                            <Protected>
-                                <SideBar/>
-                            </Protected>
-                            }></Route>
-                    </Routes>
-                </ContexProvider>
-            </BrowserRouter>
-
-    </>
+    <div className="bg-bgcolor h-screen">
+        <BrowserRouter>
+            <ContexProvider>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/Register" element={<Register />} />
+                    <Route path="/home/*" element={
+                        <Protected>
+                            <SideBar/>
+                        </Protected>
+                        }></Route>
+                </Routes>
+            </ContexProvider>
+        </BrowserRouter>
+    </div>
   )
 }
 

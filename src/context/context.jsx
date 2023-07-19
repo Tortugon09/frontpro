@@ -1,4 +1,4 @@
-import {createContext, useState, useEffect, useReducer} from "react";
+import {createContext, useState, useEffect} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 // Importar TensorFlow.js

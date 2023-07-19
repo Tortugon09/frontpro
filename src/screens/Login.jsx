@@ -1,5 +1,5 @@
-import logo from "../assets/logo.jpg"
-import logojak from "../assets/logojak.png"
+import logo from "../assets/logo.png"
+import logojak from "../assets/logojak1.svg"
 import {Link, useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {Context} from "../context/context.jsx";
@@ -59,7 +59,7 @@ export default function Login() {
                         src={logo}
                         alt="mabe logo"
                     />
-                    <h2 className="flex flex-col items-center justify-center mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                    <h2 className="flex flex-col items-center justify-center mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
                         <img
                             className="mx-3 h-auto w-28"
                             src={logojak}
@@ -73,7 +73,7 @@ export default function Login() {
                     <form className="space-y-6" onSubmit={handlesubmit} method="POST">
                         <div>
                             <div className="flex ">
-                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
                                     Email address
                                 </label>
                             </div>
@@ -92,11 +92,11 @@ export default function Login() {
 
                         <div>
                             <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-white">
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-mabecolor hover:text-indigo-500">
+                                    <a href="#" className="font-semibold text-white hover:text-indigo-500">
                                         Forgot password?
                                     </a>
                                 </div>
@@ -115,13 +115,13 @@ export default function Login() {
                         </div>
 
                         <div>
-                            <Link to='/Register'>Registrate Aqui</Link>
+                            <Link className="text-white" to='/Register'>Registrate Aqui</Link>
                         </div>
 
                         <div>
                             <button
                                 type="submit"
-                                className="text-white flex w-full justify-center rounded-md bg-mabecolor px-3 py-1.5 leading-6 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="text-white flex w-full justify-center rounded-md bg-bgcolor2 px-3 py-1.5 leading-6 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Sign in
                             </button>

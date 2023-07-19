@@ -31,9 +31,21 @@ export const options = {
         },
         title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: 'Grafica Termopar',
         },
     },
+    scales: {
+        x: {
+            grid: {
+                color: false
+            }
+        },
+        y: {
+            grid: {
+                color : '#3D3C41'
+            }
+        }
+    }
 };
 
 export function LineChart3() {
@@ -60,12 +72,14 @@ export function LineChart3() {
             {
                 label: 'Temperatura',
                 data: valoresTemp, // Datos estáticos o personalizados
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: ["#A4C695", "#1F1F1F"],
+                borderColor: "#5E5CE6",
             },
             {
                 label: 'Temperatura Actual',
                 data: valoresTempPred, // Datos estáticos o personalizados
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                backgroundColor: ["#c5983e", "#292929"],
+                borderColor: "#3D3C41",
             },
         ],
     };

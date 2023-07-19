@@ -2,20 +2,20 @@ import {Fragment, useContext, useState} from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {Bars3BottomLeftIcon, HomeIcon, XMarkIcon, BeakerIcon, BoltIcon, FireIcon} from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import {Link} from "react-router-dom";
+import {Link, Route, Routes} from "react-router-dom";
 import logo from "../assets/logo.jpg"
-import jak from "../assets/logojak.png"
+import jak from "../assets/logojak1.svg"
 import {LineChart} from "./Line.jsx";
 import {LineChart2} from "./Line2";
 import {LineChart3} from "./Line3";
-import axios from "axios";
 import {Context} from "../context/context.jsx";
+import Stats from "./Stats.jsx";
 
 const navigation = [
-    { name: 'Home', href: '/Home', icon: HomeIcon, current: true },
-    { name: 'PH', href: '/PH', icon: BeakerIcon, current: true },
-    { name: 'Conductividad Electrica', href: '/CE', icon: BoltIcon, current: true },
-    { name: 'Termopar', href: '/Temp', icon: FireIcon, current: true },
+    { name: 'Home', href: '/home', icon: HomeIcon, current: true },
+    { name: 'PH', href: '/home', icon: BeakerIcon, current: true },
+    { name: 'Conductividad Electrica', href: '/home/CE', icon: BoltIcon, current: true },
+    { name: 'Termopar', href: '/home/Temp', icon: FireIcon, current: true },
 
 ]
 
@@ -35,7 +35,7 @@ export default function SideBar() {
 
     return (
         <>
-            <div className="h-screen">
+            <div className="h-screen bg-bgcolor">
                 <Transition.Root show={sidebarOpen} as={Fragment}>
                     <Dialog as="div" className="relative z-40 md:hidden" onClose={setSidebarOpen}>
                         <Transition.Child
@@ -60,7 +60,7 @@ export default function SideBar() {
                                 leaveFrom="translate-x-0"
                                 leaveTo="-translate-x-full"
                             >
-                                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4">
+                                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-bgcolor pt-5 pb-4">
                                     <Transition.Child
                                         as={Fragment}
                                         enter="ease-in-out duration-300"
@@ -117,7 +117,7 @@ export default function SideBar() {
                 {/* Static sidebar for desktop */}
                 <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                    <div className="flex flex-grow flex-col overflow-y-auto bg-white pt-5">
+                    <div className="flex flex-grow flex-col overflow-y-auto bg-bgcolor pt-5 border-r-2 border-black">
                         <div className="flex justify-center items-center px-4">
                             <img
                                 className="h-10 w-auto"
@@ -132,7 +132,7 @@ export default function SideBar() {
                                         key={item.name}
                                         href={item.href}
                                         className={classNames(
-                                            item.current ? 'bg-transparent text-gris-text' : 'text-indigo-100 hover:bg-indigo-600',
+                                            item.current ? 'bg-transparent text-gray-100' : 'text-indigo-100 hover:bg-indigo-600',
                                             'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                                         )}
                                     >
@@ -145,7 +145,7 @@ export default function SideBar() {
                     </div>
                 </div>
                 <div className="flex flex-1 flex-col md:pl-64">
-                    <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
+                    <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-bgcolor shadow border-b-2 border-black">
                         <button
                             type="button"
                             className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
@@ -156,26 +156,9 @@ export default function SideBar() {
                         </button>
                         <div className="flex flex-1 justify-between px-4">
                             <div className="flex flex-1">
-                                <form className="flex w-full md:ml-0" action="#" method="GET">
-                                    <label htmlFor="search-field" className="sr-only">
-                                        Search
-                                    </label>
-                                    <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
-                                            <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
-                                        </div>
-                                        <input
-                                            id="search-field"
-                                            className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
-                                            placeholder="Search"
-                                            type="search"
-                                            name="search"
-                                        />
-                                    </div>
-                                </form>
                             </div>
                             <div className="ml-4 flex items-center md:ml-6">
-                                <h2 className="flex justify-center items-center text-center text-m font-bold text-gray-900">
+                                <h2 className="flex justify-center items-center text-center text-m font-bold text-white">
                                     <img
                                         className="mx-3 h-4 w-auto"
                                         src={jak}
@@ -228,17 +211,17 @@ export default function SideBar() {
                     </div>
 
                     <main>
-                        <div className="py-6 bg-bg-gris h-full">
+                        <div className="py-6 bg-bgcolor h-full">
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                                <h1 className="text-2xl font-semibold text-gray-900">Model Test</h1>
+                                <h1 className="text-2xl font-semibold text-text">Dashboard</h1>
                             </div>
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                                 <div className="py-4">
-
-                                    <button>prueba</button>
-                                    <LineChart/>
-                                    <LineChart2/>
-                                    <LineChart3/>
+                                    <Routes>
+                                        <Route path={"/"} element={ <><Stats/><LineChart/> </> }/>
+                                        <Route path={"/CE"} element={<><Stats/><LineChart2/> </>}/>
+                                        <Route path={"/Temp"} element={<><Stats/><LineChart3/> </>}/>
+                                    </Routes>
                                 </div>
                             </div>
                         </div>
