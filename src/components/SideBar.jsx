@@ -270,7 +270,7 @@ export default function SideBar() {
                     <main>
                         <div className="py-6 bg-bgcolor h-full">
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                                <h1 className="text-2xl font-semibold text-text">Dashboard</h1>
+                                <a href={"http://18.117.225.35/admin"} className="text-2xl font-semibold text-text">Dashboard</a>
                             </div>
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                                 <div className="py-4">

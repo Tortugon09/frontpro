@@ -25,7 +25,7 @@ export default function Login() {
 
     const loginDates= async(user) => {
         const { email, lastName, name, password,phone } = user;
-        await axios.post('http://3.16.51.196/api/login', { email ,lastName , name, password , phone })
+        await axios.post('http://18.117.225.35/api/login', { email ,lastName , name, password , phone })
             .then( function (response) {
                 console.log(response.data.jwt);
                 setToken(response.data.jwt)

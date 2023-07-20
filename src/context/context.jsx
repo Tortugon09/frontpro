@@ -146,12 +146,12 @@ export const ContexProvider = ({ children }) => {
     const login = async (user) => {
         const {email, password} = user
         await axios
-            .post("http://3.16.48.171:8080/login", {email,password})
+            .post("http://18.117.225.35/login", {email,password})
             .then( async(response) => {
                 setToken(response.headers['authorization'])
                 await axios({
                     method: 'get',
-                    url: `http://3.16.48.171:8080/client/findByEmail?email=${email}`,
+                    url: `http://18.117.225.35/client/findByEmail?email=${email}`,
                     headers: {'Authorization': `${response.headers['authorization']}`}
                 }).then(function (response) {
                     console.log(response.data.data)
@@ -169,7 +169,7 @@ export const ContexProvider = ({ children }) => {
     const getUser = async () => {
         await axios({
             method: 'get',
-            url: `http://3.16.48.171:8080/client/findByEmail?email=${userR[0].email}`,
+            url: `http://18.117.225.35/client/findByEmail?email=${userR[0].email}`,
         }).then(function (response) {
             console.log(response.data.data)
             setUserR(response.data.data);
@@ -181,7 +181,7 @@ export const ContexProvider = ({ children }) => {
 
     const createUserPost= async(user) => {
         const { email, lastName, name, password,phone } = user;
-        await axios.post("http://3.16.48.171:8080/client/register", { email ,lastName , name, password , phone });
+        await axios.post("http://18.117.225.35/client/register", { email ,lastName , name, password , phone });
         getUser();
         navigate("/HappyWeb/LogIn")
     }
@@ -192,7 +192,7 @@ export const ContexProvider = ({ children }) => {
 
 
     const getPH= async() => {
-        await axios.get("http://3.16.51.196/watersample/get_sample_day/2023-07-15").then(
+        await axios.get("http://18.117.225.35/watersample/get_sample_day/2023-07-15").then(
             function (response){
                 console.log(response.data.data)
                 setValores(response.data.data)
