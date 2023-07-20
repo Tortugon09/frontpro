@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import {Context} from "../context/context.jsx";
-import {math} from "@tensorflow/tfjs";
 // import faker from 'faker';
 
 ChartJS.register(
@@ -32,7 +31,7 @@ export const options = {
         },
         title: {
             display: true,
-            text: 'PH',
+            text: 'Ultrasonic',
         },
     },
     scales: {
@@ -49,14 +48,19 @@ export const options = {
     }
 };
 
-export function LineChart() {
+export function LineChart4() {
     const {valores} = useContext(Context);
-    const valoresPH = valores.map((valor) => valor.ph)
-    const valoresPHPred = valores.map((valor) => valor.ph + Math.random())
+
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const valoresTemp = valores.map((valor) => valor.otroSensor)
+    const valoresTempPred = valores.map((valor) => valor.otroSensor + getRandomArbitrary(1, 60))
     const labels = valores.map((valor) => {
         const fecha = new Date(valor.timestamp)
         const dia = fecha.getDate();
-        const mes = fecha.getMonth() + 1; // Los meses en JavaScript son base 0, por lo que se suma 1
+        const mes = fecha.getMonth() + 1;
         const ano = fecha.getFullYear();
         const representacionFecha = `${dia}/${mes}/${ano}`;
         return (representacionFecha)
@@ -66,15 +70,14 @@ export function LineChart() {
         labels,
         datasets: [
             {
-                label: 'PH',
-                data: valoresPH, // Datos estáticos o personalizados
+                label: 'Ultrasonic',
+                data: valoresTemp, // Datos estáticos o personalizados
                 backgroundColor: ["#A4C695", "#1F1F1F"],
                 borderColor: "#5E5CE6",
-
             },
             {
-                label: 'PH Predicho',
-                data: valoresPHPred, // Datos estáticos o personalizados
+                label: 'Ultrasonic Pred',
+                data: valoresTempPred, // Datos estáticos o personalizados
                 backgroundColor: ["#c5983e", "#292929"],
                 borderColor: "#3D3C41",
             },

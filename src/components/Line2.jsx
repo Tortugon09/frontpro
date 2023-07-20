@@ -31,7 +31,7 @@ export const options = {
         },
         title: {
             display: true,
-            text: 'Grafica Conductividad electrica',
+            text: 'Electric conductivity',
         },
     },
     scales: {
@@ -76,13 +76,13 @@ export function LineChart2() {
         labels,
         datasets: [
             {
-                label: 'Conductividad Electrica',
+                label: 'Electric conductivity',
                 data: valoresCondu, // Datos estáticos o personalizados
                 backgroundColor: ["#A4C695", "#1F1F1F"],
                 borderColor: "#5E5CE6",
             },
             {
-                label: 'Conductividad Predicho',
+                label: 'Electric conductivity',
                 data: valoresConduPred, // Datos estáticos o personalizados
                 backgroundColor: ["#c5983e", "#292929"],
                 borderColor: "#3D3C41",

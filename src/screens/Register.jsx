@@ -51,7 +51,7 @@ export default function Login() {
     const navigate = useNavigate();
     return (
         <>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <div className="flex h-screen l flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         className="mx-auto h-1/2 w-auto"
@@ -133,7 +133,7 @@ export default function Login() {
                         </div>
 
                         <div>
-                            <Link className="text-white" to='/'>Ya tengo cuenta</Link>
+                            <Link className="text-white" to='/'>I have a account</Link>
                         </div>
 
                         <div>

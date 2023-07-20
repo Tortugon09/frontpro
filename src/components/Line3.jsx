@@ -31,7 +31,7 @@ export const options = {
         },
         title: {
             display: true,
-            text: 'Grafica Termopar',
+            text: 'Termopar',
         },
     },
     scales: {

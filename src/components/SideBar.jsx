@@ -1,6 +1,6 @@
 import {Fragment, useContext, useState} from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import {Bars3BottomLeftIcon, HomeIcon, XMarkIcon, BeakerIcon, BoltIcon, FireIcon} from '@heroicons/react/24/outline'
+import {Bars3BottomLeftIcon, HomeIcon, XMarkIcon, BeakerIcon, BoltIcon, FireIcon, CubeIcon} from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import {Link, Route, Routes} from "react-router-dom";
 import logo from "../assets/logo.jpg"
@@ -10,12 +10,14 @@ import {LineChart2} from "./Line2";
 import {LineChart3} from "./Line3";
 import {Context} from "../context/context.jsx";
 import Stats from "./Stats.jsx";
+import {LineChart4} from "./Line4.jsx";
 
 const navigation = [
     { name: 'Home', href: '/home', icon: HomeIcon, current: true },
     { name: 'PH', href: '/home', icon: BeakerIcon, current: true },
-    { name: 'Conductividad Electrica', href: '/home/CE', icon: BoltIcon, current: true },
+    { name: 'Electric conductivity', href: '/home/CE', icon: BoltIcon, current: true },
     { name: 'Termopar', href: '/home/Temp', icon: FireIcon, current: true },
+    { name: 'Ultrasonic', href: '/home/NA', icon: CubeIcon, current: true },
 
 ]
 
@@ -74,6 +76,8 @@ export default function SideBar() {
     const valoresConduPred = valores.map((valor) => valor.condu + getRandomArbitrary(1, 30))
     const valoresTemp = valores.map((valor) => valor.termo)
     const valoresTempPred = valores.map((valor) => valor.termo + getRandomArbitrary(1, 30))
+    const valoresUS = valores.map((valor) => valor.otroSensor)
+    const valoresUSPred = valores.map((valor) => valor.otroSensor + getRandomArbitrary(1, 30))
 
     const PhMedia = calcularMedia(valoresPH)
     const PhModa = calcularModa(valoresPH)
@@ -87,6 +91,11 @@ export default function SideBar() {
     const TPModa = calcularModa(valoresTemp)
     const TPMedia1 = calcularMedia(valoresTempPred)
     const TPModa1 = calcularModa(valoresTempPred)
+    const USMedia = calcularMedia(valoresTemp)
+    const USModa = calcularModa(valoresTemp)
+    const USMedia1 = calcularMedia(valoresUSPred)
+    const USModa1 = calcularModa(valoresUSPred)
+    console.log(valores)
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -276,8 +285,9 @@ export default function SideBar() {
                                 <div className="py-4">
                                     <Routes>
                                         <Route path={"/"} element={ <><Stats tittle={"PH"} moda={PhModa} media={PhMedia} moda1={PhModa1} media1={PhMedia1}/><LineChart/> </> }/>
-                                        <Route path={"/CE"} element={<><Stats tittle={"Conductividad Electrica"} moda={CEModa} media={CEMedia} moda1={CEModa1} media1={CEMedia1}/><LineChart2/> </>}/>
+                                        <Route path={"/CE"} element={<><Stats tittle={"Electric conductivity"} moda={CEModa} media={CEMedia} moda1={CEModa1} media1={CEMedia1}/><LineChart2/> </>}/>
                                         <Route path={"/Temp"} element={<><Stats tittle={"Temp"} moda={TPModa} media={TPMedia} moda1={TPModa1} media1={TPMedia1}/><LineChart3/> </>}/>
+                                        <Route path={"/NA"} element={<><Stats tittle={"Ultrasonic"} moda={USModa} media={USMedia} moda1={USModa1} media1={USMedia1}/><LineChart4/> </>}/>
                                     </Routes>
                                 </div>
                             </div>
