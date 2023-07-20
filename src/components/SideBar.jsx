@@ -30,8 +30,65 @@ function classNames(...classes) {
 export default function SideBar() {
     const {login,token, setToken, setUserR,userR,setOpen, valores} = useContext(Context);
 
+    function calcularMedia(arregloDatos) {
+        if (!Array.isArray(arregloDatos) || arregloDatos.length === 0) {
+            return 0; // Si el arreglo está vacío o no es un arreglo, retornamos 0 como valor predeterminado.
+        }
+
+        const suma = arregloDatos.reduce((acc, num) => acc + num, 0);
+        const media = suma / arregloDatos.length;
+        return media;
+    }
+
+    function calcularModa(arregloDatos) {
+        if (!Array.isArray(arregloDatos) || arregloDatos.length === 0) {
+            return null; // Si el arreglo está vacío o no es un arreglo, retornamos null.
+        }
+
+        const contador = new Map();
+        let moda = null;
+        let maxRepeticiones = 0;
+
+        arregloDatos.forEach((valor) => {
+            if (contador.has(valor)) {
+                contador.set(valor, contador.get(valor) + 1);
+            } else {
+                contador.set(valor, 1);
+            }
+
+            if (contador.get(valor) > maxRepeticiones) {
+                moda = valor;
+                maxRepeticiones = contador.get(valor);
+            }
+        });
+
+        return moda;
+    }
+    const valoresPH = valores.map((valor) => valor.ph)
+    const valoresPHPred = valores.map((valor) => valor.ph + Math.random())
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const valoresCondu = valores.map((valor) => valor.condu)
+    const valoresConduPred = valores.map((valor) => valor.condu + getRandomArbitrary(1, 30))
+    const valoresTemp = valores.map((valor) => valor.termo)
+    const valoresTempPred = valores.map((valor) => valor.termo + getRandomArbitrary(1, 30))
+
+    const PhMedia = calcularMedia(valoresPH)
+    const PhModa = calcularModa(valoresPH)
+    const PhMedia1 = calcularMedia(valoresPHPred)
+    const PhModa1 = calcularModa(valoresPHPred)
+    const CEMedia = calcularMedia(valoresCondu)
+    const CEModa1 = calcularModa(valoresCondu)
+    const CEMedia1 = calcularMedia(valoresConduPred)
+    const CEModa = calcularModa(valoresConduPred)
+    const TPMedia = calcularMedia(valoresTemp)
+    const TPModa = calcularModa(valoresTemp)
+    const TPMedia1 = calcularMedia(valoresTempPred)
+    const TPModa1 = calcularModa(valoresTempPred)
+
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [ph, setPh] = useState(true)
 
     return (
         <>
@@ -218,9 +275,9 @@ export default function SideBar() {
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                                 <div className="py-4">
                                     <Routes>
-                                        <Route path={"/"} element={ <><Stats/><LineChart/> </> }/>
-                                        <Route path={"/CE"} element={<><Stats/><LineChart2/> </>}/>
-                                        <Route path={"/Temp"} element={<><Stats/><LineChart3/> </>}/>
+                                        <Route path={"/"} element={ <><Stats tittle={"PH"} moda={PhModa} media={PhMedia} moda1={PhModa1} media1={PhMedia1}/><LineChart/> </> }/>
+                                        <Route path={"/CE"} element={<><Stats tittle={"Conductividad Electrica"} moda={CEModa} media={CEMedia} moda1={CEModa1} media1={CEMedia1}/><LineChart2/> </>}/>
+                                        <Route path={"/Temp"} element={<><Stats tittle={"Temp"} moda={TPModa} media={TPMedia} moda1={TPModa1} media1={TPMedia1}/><LineChart3/> </>}/>
                                     </Routes>
                                 </div>
                             </div>

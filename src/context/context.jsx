@@ -9,6 +9,11 @@ export const Context = createContext();
 
 export const ContexProvider = ({ children }) => {
 
+
+
+
+
+
 // Definir los datos de entrenamiento
     const datosEntrenamiento = [
         { pH: 6.7, fecha: new Date('2023-07-01') },
@@ -219,7 +224,9 @@ export const ContexProvider = ({ children }) => {
                 token,
                 setToken,
                 setOpen,
-                open
+                open,
+
+
             }}>
             {children}
         </Context.Provider>
